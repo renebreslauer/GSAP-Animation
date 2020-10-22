@@ -1,3 +1,50 @@
+<style>
+@import "compass";
+
+body {
+  background: #FED75A;
+  overflow: hidden;
+}
+
+figure { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+svg {
+  padding: 5vw;
+  width: 90vw;
+}
+
+svg > * { 
+  fill: #1C1C1C;
+  stroke: #1C1C1C;
+  stroke-width: 0.85px;
+}
+
+/* hover tip */
+
+body:hover:after {
+  content: "Hover to Slow Motion";
+  position: absolute;
+  left: 0; right: 0; bottom: 1vh;
+  color: #1C1C1C;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font: 700 9px/14px Tahoma, sans-serif;
+  @include animation(tip 2.5s forwards);
+}
+
+@include keyframes(tip) {
+  0%, 100% { opacity: 0; }
+  10%, 80% { opacity: 1; }
+}
+</style>
+
 <figure>
 <svg version="1.1" id="Layer_1"  x="0px" y="0px"
 	 viewBox="0 0 1920 1080" style="enable-background:new 0 0 1920 1080;" xml:space="preserve">
@@ -206,3 +253,51 @@
 </svg>
 
 </figure>
+<script>
+	var tmax_optionsGlobal = {
+  repeat: -1,
+  repeatDelay: 0.65,
+  yoyo: true
+};
+
+CSSPlugin.useSVGTransformAttr = true;
+
+var tl = new TimelineMax(tmax_optionsGlobal),
+    path = 'svg *',
+    stagger_val = 0.0125,
+    duration = 0.75;
+
+$.each($(path), function(i, el) {
+  tl.set($(this), {
+    x: '+=' + getRandom(-500, 500),
+    y: '+=' + getRandom(-500, 500),
+    rotation: '+=' + getRandom(-720, 720),
+    scale: 0,
+    opacity: 0
+  });
+});
+
+var stagger_opts_to = {
+  x: 0,
+  y: 0,
+  opacity: 1,
+  scale: 1,
+  rotation: 0,
+  ease: Power4.easeInOut
+};
+
+tl.staggerTo(path, duration, stagger_opts_to, stagger_val);
+
+var $svg = $('svg');
+$svg.hover(
+  function() {
+    tl.timeScale(0.2);
+  },
+  function() {
+    tl.timeScale(1);
+  });
+
+function getRandom(min, max) {
+  return Math.random() * (max - min) + min;
+}
+</script>

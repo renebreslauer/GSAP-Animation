@@ -2,18 +2,18 @@
 @import "compass";
 
 svg {
-  width: 400px;
+  width: 100%;
 }
 
 svg > * { 
-  fill: #1C1C1C;
-  stroke: #1C1C1C;
+  fill: #ffd044;
+  stroke: #ffd044;
   stroke-width: 0.85px;
 }
 
 /* hover tip */
 
-body:hover:after {
+/* body:hover:after {
   position: absolute;
   left: 0; right: 0; bottom: 1vh;
   color: #1C1C1C;
@@ -22,7 +22,7 @@ body:hover:after {
   letter-spacing: 0.5px;
   font: 700 9px/14px Tahoma, sans-serif;
   @include animation(tip 2.5s forwards);
-}
+} */
 
 @include keyframes(tip) {
   0%, 100% { opacity: 0; }
